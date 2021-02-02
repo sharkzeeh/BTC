@@ -1,0 +1,36 @@
+{% extends "news/base.html" %}
+
+{% block content %}
+<article class="media content-section">
+    <!-- BS4 CLASS rounded-circle-->
+    <img class="rounded-cirlce article-img" src="{{ object.author.profile.image.url }}">
+
+    <div class="media-body">
+        <div class="article-metadata">
+            <img src="{{ object.image.url }}"></img>
+            <br></br>
+            <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+            <!-- DATE FORMAT: https://docs.djangoproject.com/en/3.1/ref/templates/builtins/#date -->
+            <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+            {% if object.author == user %}
+                <!-- btn - bs4 button -->
+                <!-- btn-secondary - bs4 muted button -->
+                <!-- btn-danger - bs4 delete button -->
+                <!-- btn-sm - bs4 small button ... -->
+                <div>
+                    <a class="btn btn-secondary btn-sm mb-1 mt-1" href="{% url 'post-update' object.id %}">Update</a>
+                    <a class="btn btn-danger btn-sm mb-1 mt-1" href="{% url 'post-delete' object.id %}">Delete</a>
+                </div>
+            {% endif %}
+        </div>
+        <h2 class="article-title">{{ object.title }}</h2>
+        <h4 class="article-subtitle">{{ object.subtitle }}</h4>
+        <p class="article-content">{{ object.content }}</p>
+    </div>
+</article>
+{% endblock content %}
+
+<!-- WHEN DEALING WITH DetailedViews -->
+<!-- it expects the context of this template -->
+<!--    to be called object -->
+<!-- so change post => object -->
