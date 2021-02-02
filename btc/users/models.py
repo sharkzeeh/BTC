@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from PIL import Image
 
 
-# Adding profile pictures
 class Profile(models.Model):
     # if we delete a USER -> delete the profile
     user = models.OneToOneField(User, on_delete=models.CASCADE)
