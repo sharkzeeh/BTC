@@ -1,7 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+# from news.models import Post
+from django.contrib.auth.models import User
+from news import models as news_models
+from django.core.paginator import Paginator
 
 
 def register(request):
@@ -47,9 +51,16 @@ def profile(request):
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
 
+    # https://docs.djangoproject.com/en/3.1/topics/pagination/
+    user_posts = news_models.Post.objects.filter(author=request.user).order_by('-date_posted')
+    paginator = Paginator(user_posts, 7)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'page_obj': page_obj
     }
 
     return render(request, 'users/profile.html', context=context)

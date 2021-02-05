@@ -34,3 +34,24 @@ class Post(models.Model):
         finds a location to a specific post
         '''
         return reverse('post-detail', kwargs={'pk': self.pk })
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post,
+                            on_delete=models.CASCADE,
+                            related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    date_posted = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ('-date_posted',)
+
+    def __str__(self):
+        return f'Comment by {self.author.username} on {self.post}'
+
+    def get_absolute_url(self):
+        '''
+        finds a location to a specific post
+        '''
+        return reverse('comment-detail', kwargs={'pk': self.pk })

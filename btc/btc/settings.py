@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.humanize',
     'users.apps.UsersConfig',
     'news.apps.NewsConfig',
     'crispy_forms', 

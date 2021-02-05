@@ -17,6 +17,8 @@
             <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
             <h4><a class="article-title text-muted">{{ post.subtitle }}</a></h4>
             <p class="article-content">{{ post.content }}</p>
+            <!-- COMMENTS SECTION -->
+            <a class="btn btn-primary my-1" href="{% url 'post-detail' post.id %}">Comments</a>
           </div>
         </article>
     {% endfor %}
