@@ -25,7 +25,7 @@
           <div class="container">
             <div class="collapse navbar-collapse" id="navbarToggle">
               <a href="{% url 'news-home' %}">
-                  <img class="nav-item nav-link" width="100" height="50" src="{% static '../media/logo.png' %}" href="{% url 'news-home' %}"></img>
+                  <img class="nav-item nav-link" width="100" height="50" src="{% static 'news/logo.png' %}" href="{% url 'news-home' %}"></img>
               </a>
               <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="{% url 'news-home' %}">Home (Latest News)</a>
@@ -41,10 +41,10 @@
                     <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                     <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                 {% else %}
-                    <img class="img" width="30" height="30" src="{% static '../media/login_icon.png' %}"></img>
+                    <img class="img" width="30" height="30" src="{% static 'news/login_icon.png' %}"></img>
                     <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
 
-                    <img class="img" width="30" height="30" src="{% static '../media/register_icon.png' %}"></img>
+                    <img class="img" width="30" height="30" src="{% static 'news/register_icon.png' %}"></img>
                     <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
                 {% endif %}
             </div>
@@ -82,7 +82,7 @@
         
         {% block logobot %}
         <a href="{% url 'news-home' %}">
-            <img class="nav-item nav-link" width="100" height="50" src="{% static '../media/logo.png' %}"></img>
+            <img class="nav-item nav-link" width="100" height="50" src="{% static 'news/logo.png' %}"></img>
         </a>
         {% endblock %}
 
