@@ -1,0 +1,27 @@
+variables:
+  PROJ_NAME: btc-test
+  PROJ_PATH: /opt/i.babikov-sandbox/$PROJ_NAME
+
+stages:
+  - build
+
+build:dev:
+  stage: build
+  script:
+    # - make install
+    - mkdir -p $PROJ_PATH
+    - cp -r ./* $PROJ_PATH
+    - cd $PROJ_PATH
+    - pwd
+    - ls -lah
+    - cp ./_CI/backend.service /etc/systemd/system/${PROJ_NAME}.service
+    - chmod +x ./_CI/runserver.sh
+    - pwd
+    - printf "%s\n" "SECRET_KEY=${SECRET_KEY}" >> ./btc/btc/.env
+    - printf "%s\n" "DATABASE_URL=${DATABASE_URL}" >> ./btc/btc/.env
+    - make run
+    - service btc-test restart
+  only:
+    - dev
+  tags:
+    - i.babikov-sandbox

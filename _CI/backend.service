@@ -1,0 +1,12 @@
+[Unit]
+Description=i.babikov-sandbox service
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/opt/i.babikov-sandbox/btc-test/
+ExecStart=/bin/sh /opt/i.babikov-sandbox/btc-test/_CI/runserver.sh
+
+[Install]
+WantedBy=multi-user.target
