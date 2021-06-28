@@ -1,0 +1,50 @@
+{% extends "news/base.html" %}
+{% load humanize %}
+{% block content %}
+<article class="media content-section">
+    <!-- BS4 CLASS rounded-circle-->
+    <img class="rounded-cirlce article-img" src="{{ object.author.profile.image.url }}">
+
+    <div class="media-body">
+        <div class="article-metadata">
+            <img src="{{ object.image.url }}"></img>
+            <br></br>
+            <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+            <!-- DATE FORMAT: https://docs.djangoproject.com/en/3.1/ref/templates/builtins/#date -->
+            <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+            {% if object.author == user %}
+                <div>
+                    <a class="btn btn-secondary btn-sm mb-1 mt-1" href="{% url 'post-update' object.id %}">Update</a>
+                    <a class="btn btn-danger btn-sm mb-1 mt-1" href="{% url 'post-delete' object.id %}">Delete</a>
+                </div>
+            {% endif %}
+        </div>
+        <h2 class="article-title">{{ object.title }}</h2>
+        <h4 class="article-subtitle">{{ object.subtitle }}</h4>
+        <p class="article-content">{{ object.content }}</p>
+
+        <!-- https://stackoverflow.com/questions/6704749/relatedmanager-object-is-not-iterable-django -->
+        <br></br>
+        <p class="font-weight-light text-muted font-size 24">COMMENTS</p>
+        <div class="media-body">
+
+            <a class="btn" href="{% url 'comment-post' object.id %}">Leave a comment</a>
+            <br></br>
+                        
+            {% for comment in object.comments.all %}
+                <div>
+                    <a class="text-secondary" href="{% url 'comment-detail' object.id comment.id %}">
+                        By {{ comment.author.first_name }} at {{ comment.date_posted|naturaltime }}
+                    </a>
+                    <p class="article-content">{{ comment.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</article>
+{% endblock content %}
+
+<!-- WHEN DEALING WITH DetailedViews -->
+<!-- it expects the context of this template -->
+<!--    to be called object -->
+<!-- so change post => object -->

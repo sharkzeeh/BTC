@@ -1,0 +1,39 @@
+version: '3'
+
+# https://stackoverflow.com/questions/58522952/linking-my-django-docker-container-to-a-postgres-container
+# https://stackoverflow.com/questions/37307346/is-the-server-running-on-host-localhost-1-and-accepting-tcp-ip-connections
+services:
+  postgres:
+    restart: always
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    volumes:
+      - /database:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      net:
+        aliases:
+          - postgres
+
+
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: django
+    command: ./docker_entrypoint.sh
+    ports:
+      - "8001:8000"
+    networks:
+      net:
+        aliases:
+          - django
+    depends_on: 
+      - postgres
+
+networks:
+  net:
+    driver: bridge

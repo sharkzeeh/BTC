@@ -1,0 +1,20 @@
+variables:
+  PROJ_NAME: btc-docker
+  PROJ_PATH: /opt/i.babikov-sandbox-docker/$PROJ_NAME
+
+stages:
+  - build
+
+build:dev:
+  stage: build
+  script:
+    - mkdir -p $PROJ_PATH
+    - cp -r ./* $PROJ_PATH
+    - cd $PROJ_PATH
+    - printf "%s\n" "SECRET_KEY=${SECRET_KEY}" >> ./btc/btc/.env
+    - printf "%s\n" "DATABASE_URL=${DATABASE_URL_DOCKER}" >> ./btc/btc/.env
+    - make start
+  only:
+    - dev-docker
+  tags:
+    - i.babikov-sandbox
